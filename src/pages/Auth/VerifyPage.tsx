@@ -50,7 +50,6 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function VerifyPage() {
-  const navigate = useNavigate();
   const validateAccessCodeMutation = useValidateAccessCode();
 
   const {

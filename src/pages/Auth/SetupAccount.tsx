@@ -8,16 +8,19 @@ import {
   Stack,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { ArrowBack } from "@mui/icons-material";
-import { useCreateAccessCode } from "./api/useCreateAccessCode";
-
+import { useValidateAccessCode } from "./api/useValidateAccessCode";
+import { toast } from "react-toastify";
+import { useSetupAccount } from "./api/useSetupAccount";
 
 const formSchema = z.object({
-  phone: z.string().nonempty("Phone is required"),
+  name: z.string().nonempty("Name is required"),
+  password: z.string().nonempty("Password is required"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -48,8 +51,10 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
     "radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))",
 }));
 
-export default function LoginPage() {
-  const createAccessCodeMutation = useCreateAccessCode();
+export default function SetupAccount() {
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  const setupAccountMutation = useSetupAccount();
 
   const {
     register,
@@ -58,12 +63,17 @@ export default function LoginPage() {
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      phone: "",
+      name: "",
+      password: "",
     },
   });
 
   const onSubmit = async (data: FormValues) => {
-    createAccessCodeMutation.mutate(data);
+    setupAccountMutation.mutate({
+      token,
+      name: data.name,
+      password: data.password,
+    });
   };
 
   return (
@@ -81,7 +91,7 @@ export default function LoginPage() {
             textAlign: "center",
           }}
         >
-          Sign in
+          Setup account
         </Typography>
         <Typography
           variant="body2"
@@ -90,7 +100,7 @@ export default function LoginPage() {
             textAlign: "center",
           }}
         >
-          Please enter your phone to sign in
+          Please enter your name and password to continue
         </Typography>
         <Box
           component="form"
@@ -103,36 +113,26 @@ export default function LoginPage() {
           }}
         >
           <TextField
-            label="Phone"
+            label="Name"
             type="text"
             fullWidth
-            placeholder="+84..."
-            autoComplete="phone"
-            {...register("phone")}
-            error={!!errors.phone}
-            helperText={errors.phone?.message}
+            autoComplete="name"
+            {...register("name")}
+            error={!!errors.name}
+            helperText={errors.name?.message}
+          />
+          <TextField
+            label="Password"
+            type="password"
+            fullWidth
+            autoComplete="password"
+            {...register("password")}
+            error={!!errors.password}
+            helperText={errors.password?.message}
           />
           <Button type="submit" fullWidth variant="contained">
-            Next
+            Submit
           </Button>
-          <Typography
-            variant="body2"
-            sx={{
-              width: "100%",
-              textAlign: "center",
-            }}
-          >
-            Passwordless authentication methods
-          </Typography>
-        </Box>
-        <Divider>or</Divider>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          <Typography sx={{ textAlign: "center" }}>
-            Don&apos;t have an account?{" "}
-            <Link href="/register" variant="body2">
-              Sign up
-            </Link>
-          </Typography>
         </Box>
       </Card>
     </SignInContainer>

@@ -123,7 +123,7 @@ export function StudentPage() {
         phone: student.phone,
         email: student.email,
         address: student.address,
-        status: !!student.lessons,
+        status: !!student.password,
       }))
     : [];
   return (

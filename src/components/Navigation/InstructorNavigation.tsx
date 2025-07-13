@@ -1,19 +1,19 @@
 import { type Navigation } from "@toolpad/core/AppProvider";
 import { Home, MenuBook, Message } from '@mui/icons-material';
 
-export const NAVIGATION: Navigation = [
+export const INSTRUCTOR_NAVIGATION: Navigation = [
   {
-    segment: "students",
+    segment: "instructor/students",
     title: "Manage Students",
     icon: <Home />,
   },
   {
-    segment: "lessons", 
+    segment: "instructor/lessons", 
     title: "Manage Lessons",
     icon: <MenuBook />,
   },
   {
-    segment: "messages",
+    segment: "instructor/messages",
     title: "Message",
     icon: <Message />,
   },

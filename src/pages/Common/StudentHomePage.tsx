@@ -1,14 +1,15 @@
-import { Badge, Stack, Tooltip } from "@mui/material";
+import { Badge, Stack, Tooltip, Typography } from "@mui/material";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
-import { NAVIGATION } from "~/components/Navigation/Navigation";
 import Profile from "~/components/Profile/Profile";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import { STUDENT_NAVIGATION } from "~/components/Navigation/StudentNavigation";
 
 function CustomToolbarActions() {
   return (
     <Stack direction="row" alignItems="center">
+      <Typography>Student dashboard</Typography>
       <Tooltip title="Notifications">
         <Badge color="primary" variant="dot" sx={{ cursor: "pointer" }}>
           <NotificationsNoneIcon sx={{ color: "primary.main" }} />
@@ -19,7 +20,7 @@ function CustomToolbarActions() {
   );
 }
 
-export const HomePage = () => {
+export const StudentHomePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,7 +28,7 @@ export const HomePage = () => {
     pathname: location.pathname,
     searchParams: new URLSearchParams(location.search),
     navigate: (path: string | URL) => {
-      if (typeof path === 'string') {
+      if (typeof path === "string") {
         navigate(path);
       } else {
         navigate(path.pathname + path.search);
@@ -37,11 +38,11 @@ export const HomePage = () => {
 
   return (
     <AppProvider
-      navigation={NAVIGATION}
+      navigation={STUDENT_NAVIGATION}
       branding={{
         logo: <img src="https://mui.com/static/logo.png" alt="MUI logo" />,
         title: "MUI",
-        homeUrl: "/students",
+        homeUrl: "/student/tasks",
       }}
       router={router}
     >

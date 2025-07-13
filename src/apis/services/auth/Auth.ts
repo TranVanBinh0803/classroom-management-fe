@@ -59,3 +59,53 @@ export const logoutApiSpec: ApiSpec = {
 
 export const logout = () =>
   restClient.url(logoutApiSpec.uri).get().res<RestResponse<any>>();
+
+/**
+ * Setup account
+ */
+export const setupAccountApiSpec: ApiSpec = {
+  name: "setupAccount",
+  method: HttpMethod.POST,
+  uri: "/students/setupAccount",
+};
+
+export interface SetupAccountRequest {
+  token: string | null;
+  name: string;
+  password: string;
+}
+
+export const setupAccount = (request: SetupAccountRequest) =>
+  restClient
+    .url(setupAccountApiSpec.uri)
+    .json(request)
+    .post()
+    .json<RestResponse<any>>();
+
+/**
+ * studentLogin
+ */
+export const studentLoginApiSpec: ApiSpec = {
+  name: "studentLogin",
+  method: HttpMethod.POST,
+  uri: "/auths/studentLogin",
+};
+
+export interface StudentLoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface StudentLoginResponse {
+  accessToken: string;
+  expiresInSecs: number;
+  user: any;
+}
+
+export const studentLogin = (request: StudentLoginRequest) =>
+  restClient
+    .url(studentLoginApiSpec.uri)
+    .json(request)
+    .post()
+    .json<RestResponse<StudentLoginResponse>>();
+
