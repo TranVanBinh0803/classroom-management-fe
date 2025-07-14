@@ -6,12 +6,12 @@ import { NotFoundPage } from "./pages/Common/NotFoundPage";
 import { InstructorHomePage } from "./pages/Common/InstructorHomePage";
 import { StudentPage } from "./pages/Student/StudentPage";
 import { LessonPage } from "./pages/Lesson/LessonPage";
-import { MessagePage } from "./pages/Message/MessagePage";
 import SetupAccount from "./pages/Auth/SetupAccount";
 import StudentLoginPage from "./pages/Auth/StudentLoginPage";
 import { TaskPage } from "./pages/Task/TaskPage";
 import { useAuth } from "./hooks/auth/useAuth";
 import { StudentHomePage } from "./pages/Common/StudentHomePage";
+import MessagePage from "./pages/Message/MessagePage";
 
 const publicRoutes: RouteObject[] = [
   {
@@ -141,7 +141,7 @@ const defaultRoutes: RouteObject[] = [
 
 function RoleBasedRedirect() {
   const { getUser } = useAuth();
-  const userRole = getUser.role;
+  const userRole = getUser?.role;
 
   if (userRole === "student") {
     return <Navigate to="/student" replace />;

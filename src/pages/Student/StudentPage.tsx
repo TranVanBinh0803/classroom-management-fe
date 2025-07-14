@@ -6,10 +6,14 @@ import { useState } from "react";
 import { useGetStudents } from "./api/useGetStudents";
 import { useDeleteStudent } from "./api/useDeleteStudent";
 import { AddStudentModal } from "./components/AddStudentModal";
+import { useCreateConversation } from "./api/useCreateConversation";
+import { useAtomValue } from "jotai";
+import { user } from "~/atoms/AuthAtoms";
 
 const paginationModel = { page: 0, pageSize: 5 };
 
 export function StudentPage() {
+  const getUser = useAtomValue(user);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -66,7 +70,7 @@ export function StudentPage() {
     {
       field: "actions",
       headerName: "Action",
-      flex: 1,
+      flex: 2,
       align: "center",
       headerAlign: "center",
       sortable: false,
@@ -74,6 +78,7 @@ export function StudentPage() {
       renderCell: (params) => {
         const studentId = params.row.id;
         const deleteStudentMutation = useDeleteStudent(studentId);
+        const createConversationMutation = useCreateConversation();
 
         const handleDelete = () => {
           if (confirm("Are you sure you want to delete this student?")) {
@@ -86,6 +91,12 @@ export function StudentPage() {
           setOpen(true);
         };
 
+        const handleCreateConversation = () => {
+          createConversationMutation.mutate({
+            participants: [getUser, params.row],
+          });
+        };
+
         return (
           <Box
             sx={{
@@ -96,6 +107,13 @@ export function StudentPage() {
               alignItems: "center",
             }}
           >
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "green", textTransform: "none" }}
+              onClick={handleCreateConversation}
+            >
+              Chat
+            </Button>
             <Button
               variant="contained"
               sx={{ backgroundColor: "blue", textTransform: "none" }}

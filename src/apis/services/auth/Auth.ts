@@ -1,6 +1,16 @@
 import { restClient } from "~/apis/restClient";
 import { ApiSpec, HttpMethod, RestResponse } from "~/types/common";
 
+export interface UserType {
+  id: string;
+  name?: string;
+  role: string;
+  email: string;
+  phone?: string;
+  address?: string;
+  password?: string;
+  avatar: string;
+}
 /**
  * createAccessCode
  */
@@ -108,4 +118,3 @@ export const studentLogin = (request: StudentLoginRequest) =>
     .json(request)
     .post()
     .json<RestResponse<StudentLoginResponse>>();
-

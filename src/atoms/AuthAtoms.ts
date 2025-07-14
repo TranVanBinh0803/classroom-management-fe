@@ -1,4 +1,5 @@
 import { atomWithStorage } from "jotai/utils";
+import { UserType } from "~/apis/services/auth/Auth";
 
 export const accessTokenAtom = atomWithStorage<string | null>(
   "access-token",
@@ -18,6 +19,6 @@ export const accessTokenExpiresAtAtom = atomWithStorage<string | null>(
   }
 );
 
-export const user = atomWithStorage<any | null>("user", null, undefined, {
+export const user = atomWithStorage<UserType | null>("user", null, undefined, {
   getOnInit: true,
 });

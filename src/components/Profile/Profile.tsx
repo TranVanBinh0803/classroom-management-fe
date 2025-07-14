@@ -46,7 +46,7 @@ const Profile = () => {
           aria-expanded={open ? "true" : undefined}
         >
           {userAtom?.avatar !== null ? (
-            <Avatar alt={userAtom?.username} src={userAtom?.avatar} />
+            <Avatar alt={userAtom?.name} src={userAtom?.avatar} />
           ) : (
             <Avatar
               sx={{
