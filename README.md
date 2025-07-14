@@ -29,8 +29,12 @@ Here are some screeenshots of the application.
 
 ![add student](/public/images/add-student.png)
 ![assign lesson](/public/images/assign-lesson.png)
-![chat 1-1](/public/images/chat1-1.png)
+![chat 1-1](/public/images/chat-1-1.png)
 ![manage lesson](/public/images/manage-lesson.png)
 ![manage student](/public/images/manage-student.png)
 ![manage task](/public/images/manage-task.png)
 ![mark lesson done](/public/images/mark-lesson-done.png)
+![instructor login](/public/images/instructor-login.png)
+![instructor verify account](/public/images/instructor-verify-account.png)
+![student login](/public/images/student-login.png)
+![student setup account](/public/images/student-setup-account.png)
