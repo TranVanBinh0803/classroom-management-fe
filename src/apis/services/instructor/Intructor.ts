@@ -76,3 +76,59 @@ export const deleteStudent = (studentId: string) =>
     .url(deleteStudentApiSpec.uri.replace(":id", studentId))
     .delete()
     .json<RestResponse<any>>();
+
+/**
+ * Get lessons
+ */
+export const getLessonsApiSpec: ApiSpec = {
+  name: "getLessons",
+  method: HttpMethod.GET,
+  uri: "/instructors/lessons",
+};
+
+export const getLessons = () =>
+  restClient.url(getLessonsApiSpec.uri).get().json<RestResponse<any>>();
+
+/**
+ * Add lesson
+ */
+export const addLessonApiSpec: ApiSpec = {
+  name: "addLesson",
+  method: HttpMethod.POST,
+  uri: "/instructors/addLesson",
+};
+
+export interface AddLessonRequest {
+  title: string;
+  description: string;
+}
+
+export const addLesson = (request: AddLessonRequest) =>
+  restClient
+    .url(addLessonApiSpec.uri)
+    .json(request)
+    .post()
+    .json<RestResponse<any>>();
+
+/**
+ * Assign lesson
+ */
+export const assignLessonApiSpec: ApiSpec = {
+  name: "assignLesson",
+  method: HttpMethod.POST,
+  uri: "/instructors/assignLesson",
+};
+
+export interface AssignLessonRequest {
+  studentId: string;
+  lessonId: string;
+  title: string;
+  description: string;
+}
+
+export const assignLesson = (request: AssignLessonRequest) =>
+  restClient
+    .url(assignLessonApiSpec.uri)
+    .json(request)
+    .post()
+    .json<RestResponse<any>>();

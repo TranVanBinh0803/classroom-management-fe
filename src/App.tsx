@@ -21,7 +21,7 @@ function App() {
           <ToastContainer position="bottom-right" autoClose={1000} />
         </ThemeProvider>
       </JotaiProvider>
-      <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
+      {/* <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" /> */}
     </QueryClientProvider>
   );
 }

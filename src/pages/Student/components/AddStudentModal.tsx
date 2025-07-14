@@ -19,7 +19,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 1000,
+  width: "80%",
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
@@ -45,15 +45,16 @@ export function AddStudentModal({
   handleClose,
   student,
 }: AddStudentModalProps) {
-  console.log("student:", student);
   const addStudentMutation = useAddStudent();
   const updateStudentMutation = useUpdateStudent(student?.id || "");
 
+  const isPending =
+  student ? updateStudentMutation.isPending : addStudentMutation.isPending;
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -151,8 +152,8 @@ export function AddStudentModal({
           </Grid>
         </Grid>
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 6 }}>
-          <Button type="submit" variant="contained" disabled={isSubmitting}>
-            {isSubmitting
+          <Button type="submit" variant="contained" disabled={isPending}>
+            {isPending
               ? student
                 ? "Updating..."
                 : "Creating..."

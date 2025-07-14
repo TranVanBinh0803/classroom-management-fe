@@ -8,6 +8,7 @@ import { user } from "~/atoms/AuthAtoms";
 import { useSendMessage } from "./api/useSendMessage";
 import { useSocket } from "~/hooks/socket/useSocket";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
 
 type Message = {
   senderId: string;
@@ -25,6 +26,8 @@ export default function MessagePage() {
   const [getUser] = useAtom(user);
   const currentUserId = getUser?.id || "";
   const socket = useSocket(currentUserId);
+  const location = useLocation();
+const conversationFromState = location.state?.conversation;
 
   const { data: response } = useGetPersonalConversation(currentUserId);
   const [conversations, setConversations] = useState<Conversation[]>(
@@ -85,10 +88,17 @@ export default function MessagePage() {
   };
 
   useEffect(() => {
-    if (response?.data) {
-      setConversations(response.data);
+  if (response?.data) {
+    setConversations(response.data);
+
+    if (conversationFromState) {
+      const matched = response.data.find(
+        (c : any) => c.id === conversationFromState.id
+      );
+      if (matched) setSelectedConversation(matched);
     }
-  }, [response]);
+  }
+}, [response, conversationFromState]);
 
   useEffect(() => {
     if (!socket || !currentUserId || !selectedConversation) return;
@@ -201,7 +211,7 @@ export default function MessagePage() {
                   {otherUser.avatar}
                 </Avatar>
                 <Typography variant="body2" fontWeight={500}>
-                  {otherUser.name}
+                  {otherUser.name || "Instructor"}
                 </Typography>
               </Box>
               <Typography

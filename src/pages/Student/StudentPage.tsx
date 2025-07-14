@@ -9,16 +9,24 @@ import { AddStudentModal } from "./components/AddStudentModal";
 import { useCreateConversation } from "./api/useCreateConversation";
 import { useAtomValue } from "jotai";
 import { user } from "~/atoms/AuthAtoms";
+import { useGetPersonalConversation } from "../Message/api/useGetPersonalConversation";
+import { useNavigate } from "react-router-dom";
 
 const paginationModel = { page: 0, pageSize: 5 };
 
 export function StudentPage() {
   const getUser = useAtomValue(user);
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [editingStudent, setEditingStudent] = useState<any | null>(null);
 
+  const currentUserId = getUser?.id || "";
+
+  const { data: personalResponse } = useGetPersonalConversation(currentUserId);
+  console.log("personalResponse:", personalResponse);
   const columns: GridColDef[] = [
     {
       field: "name",
@@ -92,9 +100,29 @@ export function StudentPage() {
         };
 
         const handleCreateConversation = () => {
-          createConversationMutation.mutate({
-            participants: [getUser, params.row],
-          });
+          if (!getUser || !personalResponse?.data) return;
+
+          const existingConversation = personalResponse.data.find(
+            (conversation: any) => {
+              const participantIds = conversation.participants.map(
+                (p: any) => p.id
+              );
+              return (
+                participantIds.includes(getUser.id) &&
+                participantIds.includes(params.row.id)
+              );
+            }
+          );
+
+          if (existingConversation) {
+            navigate("/instructor/messages", {
+              state: { conversation: existingConversation },
+            });
+          } else {
+            createConversationMutation.mutate({
+              participants: [getUser, params.row],
+            });
+          }
         };
 
         return (
