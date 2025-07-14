@@ -156,7 +156,7 @@ const conversationFromState = location.state?.conversation;
     socket.on("receiveMessage", handleReceiveMessage);
 
     return () => {
-      socket.off("receiveMessage", handleReceiveMessage);
+      socket.off("receiveMessag", handleReceiveMessage);
     };
   }, [socket]);
 
