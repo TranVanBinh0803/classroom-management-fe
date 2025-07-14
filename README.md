@@ -17,63 +17,8 @@ yarn dev
 ```
 
 ## Project structure
-
-classroom-management-app-fe/
-├── node_modules/                  # Installed dependencies
-├── public/                        # Public assets
-├── src/                           # Main source folder
-│   ├── apis/                      # API communication logic
-│   │   ├── services/
-│   │   │   ├── queryClient.ts     # React Query client configuration
-│   │   │   └── restClient.ts      # Axios or fetch wrapper
-│   │
-│   ├── assets/                    # Images, icons, and static files
-│
-│   ├── atoms/                     # Global state with Jotai or similar
-│   │   ├── AuthAtoms.ts
-│   │   └── store.ts
-│
-│   ├── components/                # Reusable and shared UI components
-│   │   ├── Navigation/
-│   │   ├── Profile/
-│   │   └── ProtectedRoute/
-│
-│   ├── firebase/                  # Firebase configuration
-│   │   └── config.ts
-│
-│   ├── hooks/                     # Custom React hooks
-│   │   ├── auth/
-│   │   └── socket/
-│
-│   ├── pages/                     # Route-level components
-│   │   ├── Auth/
-│   │   ├── Common/
-│   │   ├── Lesson/
-│   │   ├── Message/
-│   │   ├── Student/
-│   │   └── Task/
-│
-│   ├── types/                     # TypeScript interfaces and types
-│   │   ├── common.ts
-│   │   └── ui.ts
-│
-│   ├── untis/                     # Utilities and constants
-│   │   └── constants.ts
-│
-│   ├── App.tsx                    # Root app component
-│   ├── main.tsx                   # ReactDOM render entry point
-│   ├── routes.tsx                 # App routes configuration
-│   └── theme.ts                   # Theme and styling setup
-│
-├── .env                           # Environment variables
-├── .gitignore                     # Git ignored files
-├── eslint.config.js              # Linting rules
-├── index.html                     # Base HTML file
-├── package.json                   # Project metadata and dependencies
-├── README.md                      # Project documentation
-├── tsconfig.json                  # TypeScript configuration
-├── vite.config.ts                 # Vite configuration
-├── yarn.lock                      # Yarn lock file
+![structure 1](/public/images/structure-1.png)
+![structure 2](/public/images/structure-2.png)
 
 ## Project Description
 
