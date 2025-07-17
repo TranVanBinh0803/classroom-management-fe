@@ -27,7 +27,7 @@ export default function MessagePage() {
   const currentUserId = getUser?.id || "";
   const socket = useSocket(currentUserId);
   const location = useLocation();
-const conversationFromState = location.state?.conversation;
+  const conversationFromState = location.state?.conversation;
 
   const { data: response } = useGetPersonalConversation(currentUserId);
   const [conversations, setConversations] = useState<Conversation[]>(
@@ -88,17 +88,17 @@ const conversationFromState = location.state?.conversation;
   };
 
   useEffect(() => {
-  if (response?.data) {
-    setConversations(response.data);
+    if (response?.data) {
+      setConversations(response.data);
 
-    if (conversationFromState) {
-      const matched = response.data.find(
-        (c : any) => c.id === conversationFromState.id
-      );
-      if (matched) setSelectedConversation(matched);
+      if (conversationFromState) {
+        const matched = response.data.find(
+          (c: any) => c.id === conversationFromState.id
+        );
+        if (matched) setSelectedConversation(matched);
+      }
     }
-  }
-}, [response, conversationFromState]);
+  }, [response, conversationFromState]);
 
   useEffect(() => {
     if (!socket || !currentUserId || !selectedConversation) return;
@@ -109,6 +109,8 @@ const conversationFromState = location.state?.conversation;
       socket.emit("leave", selectedConversation.id);
     };
   }, [socket, currentUserId, selectedConversation?.id]);
+
+  console.log("socket:", socket);
 
   useEffect(() => {
     if (!socket) return;
@@ -156,7 +158,7 @@ const conversationFromState = location.state?.conversation;
     socket.on("receiveMessage", handleReceiveMessage);
 
     return () => {
-      socket.off("receiveMessag", handleReceiveMessage);
+      socket.off("receiveMessage", handleReceiveMessage);
     };
   }, [socket]);
 

@@ -1,22 +1,26 @@
-import { useEffect, useRef } from "react";
+// useSocket.ts
+import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
-export const useSocket = (userId: string | null) => {
-  const socketRef = useRef<Socket | null>(null);
+let socket: Socket | null = null;
+
+export const useSocket = (userId: string | null): Socket | null => {
+  const [socketInstance, setSocketInstance] = useState<Socket | null>(null);
 
   useEffect(() => {
     if (!userId) return;
-    const socket = io(import.meta.env.VITE_BACKEND_URL, {
-      query: { userId },
-      transports: ["websocket"],
-    });
 
-    socketRef.current = socket;
+    if (!socket) {
+      socket = io(import.meta.env.VITE_BACKEND_URL, {
+        query: { userId },
+        transports: ["websocket"],
+      });
 
-    return () => {
-      socket.disconnect();
-    };
+      console.log("Socket initialized", socket.id);
+    }
+
+    setSocketInstance(socket);
   }, [userId]);
 
-  return socketRef.current;
+  return socketInstance;
 };
