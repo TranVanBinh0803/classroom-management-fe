@@ -13,6 +13,7 @@ import z from "zod";
 import { useAddStudent } from "../api/useAddStudent";
 import { useEffect } from "react";
 import { useUpdateStudent } from "../api/useUpdateStudent";
+import { phoneRegex } from "~/untils/regex";
 
 const style = {
   position: "absolute",
@@ -35,7 +36,10 @@ const formSchema = z.object({
   name: z.string().nonempty("Student name is required"),
   email: z.string().nonempty("Email is required"),
   address: z.string().nonempty("Address is required"),
-  phone: z.string().nonempty("Phone number is required"),
+  phone: z
+    .string()
+    .nonempty("Phone number is required")
+    .regex(phoneRegex, "Phone number must be valid (e.g. +84901234567)"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -48,8 +52,9 @@ export function AddStudentModal({
   const addStudentMutation = useAddStudent();
   const updateStudentMutation = useUpdateStudent(student?.id || "");
 
-  const isPending =
-  student ? updateStudentMutation.isPending : addStudentMutation.isPending;
+  const isPending = student
+    ? updateStudentMutation.isPending
+    : addStudentMutation.isPending;
   const {
     register,
     handleSubmit,
