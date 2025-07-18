@@ -30,6 +30,10 @@ const publicRoutes: RouteObject[] = [
     path: "/setup-account",
     element: <SetupAccount />,
   },
+  {
+    path: "*",
+    element: <NotFoundPage />,
+  },
 ];
 
 const instructorRoutes: RouteObject[] = [
@@ -119,6 +123,10 @@ const studentRoutes: RouteObject[] = [
           {
             path: "messages",
             element: <MessagePage />,
+          },
+          {
+            path: "*",
+            element: <NotFoundPage />,
           },
         ],
       },

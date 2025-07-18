@@ -29,7 +29,14 @@ export function ViewDetailLessonModal({
   const userId = getUser?.id || "";
   const markLessonDoneMutation = useMarkLessonDone();
   const handleMarkLessonDone = () => [
-    markLessonDoneMutation.mutate({ lessonId: lesson.id, studentId: userId }),
+    markLessonDoneMutation.mutate(
+      { lessonId: lesson.id, studentId: userId },
+      {
+        onSuccess: () => {
+          handleClose();
+        },
+      }
+    ),
   ];
   return (
     <Modal

@@ -14,10 +14,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { ArrowBack } from "@mui/icons-material";
 import { useCreateAccessCode } from "./api/useCreateAccessCode";
-
+import { phoneRegex } from "~/untils/regex";
 
 const formSchema = z.object({
-  phone: z.string().nonempty("Phone is required"),
+  phone: z
+    .string()
+    .nonempty("Phone is required")
+    .regex(phoneRegex, "Phone number must be valid (e.g. +84901234567)"),
 });
 
 type FormValues = z.infer<typeof formSchema>;

@@ -54,6 +54,7 @@ export function AddLessonModal({ open, handleClose }: AddStudentModalProps) {
   const onSubmit = async (data: FormValues) => {
     addLessonMutation.mutate(data, {
       onSuccess: () => {
+        reset();
         handleClose();
       },
     });
